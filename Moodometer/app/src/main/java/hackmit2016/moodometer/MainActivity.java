@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** Called when the user clicks the Send button */
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, Suggestions.class);
+        Intent intent = new Intent(this, ContactsActivity.class);
         startActivity(intent);
     }
 }
