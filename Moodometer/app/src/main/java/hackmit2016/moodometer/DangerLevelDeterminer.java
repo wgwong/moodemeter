@@ -24,26 +24,47 @@ public class DangerLevelDeterminer {
 
         int numMoods = moods.size();
 
-        if (condition1(moods, numMoods)) {
-            // Low moods for last two days
-            return Danger.HIGH;
-        } else if (condition2(moods, numMoods)) {
-            // "Decreasing" moods for last three days with average <= 3
-            return Danger.HIGH;
-        } else if (condition3(moods, numMoods)) {
-            // "Decreasing" moods for last three days with average <= 10/3
-            return Danger.MEDIUM;
-        } else if (condition4(moods, numMoods)) {
-            // Average value of last three days is 0.5 lower than average of other days
-            return Danger.MEDIUM;
-        } else if (condition5(moods, numMoods)) {
-            // Average mood for last three days with average 3.5
-            return Danger.MEDIUM;
-        } else if (condition6(moods, numMoods)) {
-            // Great moods for last two days
-            return Danger.LOW;
+        if (numMoods == 1) {
+            int mood = moods.get(0);
+            MoodLevel moodLevel = getMoodLevel(mood);
+            if (moodLevel == MoodLevel.BAD) {
+                return Danger.HIGH;
+            } else if (moodLevel == MoodLevel.OKAY) {
+                return Danger.MEDIUM;
+            } else {
+                return Danger.LOW;
+            }
+        } else if (numMoods == 2) {
+            double averageMood = getAverageMood(moods, numMoods);
+            if (averageMood <= 2) {
+                return Danger.HIGH;
+            } else if (averageMood <= 3.5) {
+                return Danger.MEDIUM;
+            } else {
+                return Danger.LOW;
+            }
         } else {
-            return Danger.MEDIUM;
+            if (condition1(moods, numMoods)) {
+                // Low moods for last two days
+                return Danger.HIGH;
+            } else if (condition2(moods, numMoods)) {
+                // "Decreasing" moods for last three days with average <= 3
+                return Danger.HIGH;
+            } else if (condition3(moods, numMoods)) {
+                // "Decreasing" moods for last three days with average <= 10/3
+                return Danger.MEDIUM;
+            } else if (condition4(moods, numMoods)) {
+                // Average value of last three days is 0.5 lower than average of other days
+                return Danger.MEDIUM;
+            } else if (condition5(moods, numMoods)) {
+                // Average mood for last three days with average 3.5
+                return Danger.MEDIUM;
+            } else if (condition6(moods, numMoods)) {
+                // Great moods for last two days
+                return Danger.LOW;
+            } else {
+                return Danger.MEDIUM;
+            }
         }
     }
 
