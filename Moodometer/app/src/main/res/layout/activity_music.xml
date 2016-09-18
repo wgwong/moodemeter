@@ -35,7 +35,8 @@
         android:layout_alignTop="@+id/openAndroidMediaPlayerButton"
         android:layout_alignRight="@+id/selectRandomMusicButton"
         android:layout_alignEnd="@+id/selectRandomMusicButton"
-        android:text="Other Stuff" />
+        android:text="Other Stuff"
+        android:onClick="listenToMusic" />
 
     <TextView
         android:layout_width="wrap_content"
