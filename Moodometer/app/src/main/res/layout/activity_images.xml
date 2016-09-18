@@ -37,7 +37,8 @@
         android:text="Other Stuff"
         android:id="@+id/otherStuffButton"
         android:layout_alignTop="@+id/cuteAnimalsButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="openSuggestionsActivity" />
 
     <ImageView
         android:layout_width="wrap_content"

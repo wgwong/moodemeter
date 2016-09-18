@@ -18,4 +18,9 @@ public class ContactsActivity extends AppCompatActivity {
         Intent openContacts = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivity(openContacts);
     }
+
+    public void listenToMusic(View v) {
+        Intent musicOption = new Intent(ContactsActivity.this, MusicActivity.class);
+        ContactsActivity.this.startActivity(musicOption);
+    }
 }

@@ -68,5 +68,8 @@ public class MusicActivity extends AppCompatActivity {
         });
     }
 
-
+    public void openImagesActivity(View v) {
+        Intent goToImages = new Intent(MusicActivity.this, ImagesActivity.class);
+        MusicActivity.this.startActivity(goToImages);
+    }
 }
