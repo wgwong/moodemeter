@@ -46,7 +46,7 @@ public class ImagesActivity extends AppCompatActivity {
                     try {
                         String key = "AIzaSyAI-oaRGKwCNEAD5K5awchj8c6mANL5u9o";
                         String engineId = "007910975279267573429:m1wymjkh5no";
-                        String qry = "batman";// search key word
+                        String qry = "cute+animals";// search key word
                         String fileType = "png,jpg";
                         String searchType = "image";
 
