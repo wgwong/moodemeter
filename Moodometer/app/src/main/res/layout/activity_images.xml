@@ -24,8 +24,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cute animals"
-        android:id="@+id/cuteAnimalsButton"
+        android:text="Cute animals images"
+        android:id="@+id/cuteAnimalsImagesButton"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -34,11 +34,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Other Stuff"
-        android:id="@+id/otherStuffButton"
-        android:layout_alignTop="@+id/cuteAnimalsButton"
-        android:layout_centerHorizontal="true"
-        android:onClick="openSuggestionsActivity" />
+        android:text="Cute animals videos"
+        android:id="@+id/cuteAnimalsVideosButton"
+        android:onClick="openSuggestionsActivity"
+        android:layout_below="@+id/cuteAnimalsImagesButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
