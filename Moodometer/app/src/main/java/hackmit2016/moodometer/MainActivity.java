@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         DangerLevelDeterminer determiner = new DangerLevelDeterminer();
         DangerLevelDeterminer.Danger danger = determiner.getDangerLevel(moods);
 
+        //danger = DangerLevelDeterminer.Danger.HIGH;
+
         if (danger == DangerLevelDeterminer.Danger.HIGH) {
             activityClass = MusicActivity.class;
         } else if (danger == DangerLevelDeterminer.Danger.MEDIUM) {

@@ -550,7 +550,7 @@ public class Suggestions extends Activity
         }
 
         public void returnToMainLoop(View view) {
-            Intent intent = new Intent(ctx, WantToTry.class);
+            Intent intent = new Intent(ctx, ContactsActivity.class);
             startActivity(intent);
         }
 

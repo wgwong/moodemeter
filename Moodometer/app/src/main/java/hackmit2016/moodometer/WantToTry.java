@@ -24,4 +24,9 @@ public class WantToTry extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void switchTask(View view) {
+        Intent intent = new Intent(this, ContactsActivity.class);
+        startActivity(intent);
+    }
+
 }

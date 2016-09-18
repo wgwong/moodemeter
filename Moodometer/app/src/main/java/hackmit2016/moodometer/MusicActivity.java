@@ -2,12 +2,17 @@ package hackmit2016.moodometer;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MusicActivity extends AppCompatActivity {
 
@@ -37,6 +42,22 @@ public class MusicActivity extends AppCompatActivity {
 //                 //randomly selects music
 //                 int random = (int) (Math.random() * player.length) + 1;
 //                 player[random].start();
+
+                ArrayList<String> musicList = new ArrayList<String>();
+
+                musicList.add("https://www.youtube.com/watch?v=qrx1vyvtRLY");
+                musicList.add("https://www.youtube.com/watch?v=pO-VDXpUNls");
+                musicList.add("https://www.youtube.com/watch?v=N7yQ-wuIKFc");
+                musicList.add("https://www.youtube.com/watch?v=3BNdtmWxOJk");
+
+
+                Random rand = new Random();
+
+                int randomNum = rand.nextInt((3 - 0) + 1) + 0;
+
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(musicList.get(randomNum))));
+                Log.i("Video", "Video Playing....");
+
             }
         });
 
