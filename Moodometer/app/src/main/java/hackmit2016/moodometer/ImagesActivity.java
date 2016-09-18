@@ -26,49 +26,56 @@ public class ImagesActivity extends AppCompatActivity {
 
     private List<String> imageLinks;
     private int linkIndex = -1;
+    boolean isSearchingImage = false;
+
+    Button cuteAnimalsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images);
 
-        final Button cuteAnimalsButton = (Button) findViewById(R.id.cuteAnimalsButton);
+        cuteAnimalsButton = (Button) findViewById(R.id.cuteAnimalsButton);
         final Button otherStuffButton = (Button) findViewById(R.id.otherStuffButton);
         final ImageView imageView = (ImageView) findViewById(R.id.imageView);
         cuteAnimalsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int SDK_INT = android.os.Build.VERSION.SDK_INT;
-                if (SDK_INT > 8) {
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                            .permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
+                if (!isSearchingImage) {
+                    int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                    if (SDK_INT > 8) {
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                .permitAll().build();
+                        StrictMode.setThreadPolicy(policy);
 
-                    try {
-                        String key = "AIzaSyAI-oaRGKwCNEAD5K5awchj8c6mANL5u9o";
-                        String engineId = "007910975279267573429:m1wymjkh5no";
-                        String qry = "cute+animals";// search key word
-                        String fileType = "png,jpg";
-                        String searchType = "image";
+                        try {
+                            String key = "AIzaSyAI-oaRGKwCNEAD5K5awchj8c6mANL5u9o";
+                            String engineId = "007910975279267573429:m1wymjkh5no";
+                            String qry = "cute+animals";// search key word
+                            String fileType = "png,jpg";
+                            String searchType = "image";
 
-                        String urlComponentLinker = "&";
-                        String urlBase = "https://www.googleapis.com/customsearch/v1?";
-                        String urlKeyComponent = String.format("key=%s", key);
-                        String urlEngineIdComponent = String.format("cx=%s", engineId);
-                        String urlQueryComponent = String.format("q=%s", qry);
-                        String urlFileTypeComponent = String.format("fileType=%s", fileType);
-                        String urlSearchTypeComponent = String.format("searchType=%s", searchType);
-                        String urlEnd = "alt=json";
-                        String urlString = urlBase + urlComponentLinker +
-                                urlKeyComponent + urlComponentLinker +
-                                urlEngineIdComponent + urlComponentLinker +
-                                urlQueryComponent + urlComponentLinker +
-                                urlFileTypeComponent + urlComponentLinker +
-                                urlSearchTypeComponent + urlComponentLinker +
-                                urlEnd;
-                        new LoadImageTask(imageView).execute(urlString);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new RuntimeException("Hacking... just throw exception whenever");
+                            String urlComponentLinker = "&";
+                            String urlBase = "https://www.googleapis.com/customsearch/v1?";
+                            String urlKeyComponent = String.format("key=%s", key);
+                            String urlEngineIdComponent = String.format("cx=%s", engineId);
+                            String urlQueryComponent = String.format("q=%s", qry);
+                            String urlFileTypeComponent = String.format("fileType=%s", fileType);
+                            String urlSearchTypeComponent = String.format("searchType=%s", searchType);
+                            String urlEnd = "alt=json";
+                            String urlString = urlBase + urlComponentLinker +
+                                    urlKeyComponent + urlComponentLinker +
+                                    urlEngineIdComponent + urlComponentLinker +
+                                    urlQueryComponent + urlComponentLinker +
+                                    urlFileTypeComponent + urlComponentLinker +
+                                    urlSearchTypeComponent + urlComponentLinker +
+                                    urlEnd;
+                            isSearchingImage = true;
+                            cuteAnimalsButton.setText("Searching for cute animal image...");
+                            new LoadImageTask(imageView).execute(urlString);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Hacking... just throw exception whenever");
+                        }
                     }
                 }
             }
@@ -91,7 +98,6 @@ public class ImagesActivity extends AppCompatActivity {
         protected Bitmap doInBackground(String... queryUrlStrings) {
             Bitmap bitmap = null;
             try {
-                List<String> queryResults = null;
                 if (ImagesActivity.this.imageLinks == null) {
                     // Fetch query URL
                     String queryUrlString = queryUrlStrings[0];
@@ -106,22 +112,20 @@ public class ImagesActivity extends AppCompatActivity {
 
                     // Store the query result links
                     String output;
-                    queryResults = new ArrayList<>();
+                    imageLinks = new ArrayList<>();
                     while ((output = br.readLine()) != null) {
                         if (output.contains("\"link\": \"")) {
                             String link = output.substring(output.indexOf("\"link\": \"") +
                                     ("\"link\": \"").length(), output.indexOf("\","));
-                            queryResults.add(link);
+                            imageLinks.add(link);
                         }
                     }
 
                     // Disconnect after reading from the stream
                     conn.disconnect();
-                } else {
-                    queryResults = imageLinks;
                 }
 
-                if (queryResults.isEmpty()) {
+                if (imageLinks.isEmpty()) {
                     // There are no query results, just return
                     return bitmap;
                 } else {
@@ -129,9 +133,9 @@ public class ImagesActivity extends AppCompatActivity {
                     int randInt = 0;
                     do {
                         Random rand = new Random();
-                        randInt = rand.nextInt(queryResults.size());
-                    } while (randInt == linkIndex && queryResults.size() != 1);
-                    String chosenResultUrl = queryResults.get(randInt);
+                        randInt = rand.nextInt(imageLinks.size());
+                    } while (randInt == linkIndex && imageLinks.size() != 1);
+                    String chosenResultUrl = imageLinks.get(randInt);
 
                     // Construct a bitmap from the URL
                     InputStream in = new java.net.URL(chosenResultUrl).openStream();
@@ -151,6 +155,8 @@ public class ImagesActivity extends AppCompatActivity {
             } else {
                 imageView.setImageBitmap(result);
             }
+            isSearchingImage = false;
+            cuteAnimalsButton.setText("Cute animals");
         }
     }
 
