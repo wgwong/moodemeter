@@ -24,6 +24,9 @@ import java.util.Random;
 
 public class ImagesActivity extends AppCompatActivity {
 
+    private List<String> imageLinks;
+    private int linkIndex = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,6 @@ public class ImagesActivity extends AppCompatActivity {
 
         final Button cuteAnimalsButton = (Button) findViewById(R.id.cuteAnimalsButton);
         final Button otherStuffButton = (Button) findViewById(R.id.otherStuffButton);
-        final EditText editText = (EditText) findViewById(R.id.textBox);
         final ImageView imageView = (ImageView) findViewById(R.id.imageView);
         cuteAnimalsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -79,7 +81,7 @@ public class ImagesActivity extends AppCompatActivity {
         });
     }
 
-    private static class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
         private ImageView imageView;
 
         public LoadImageTask(ImageView imageView) {
@@ -89,48 +91,66 @@ public class ImagesActivity extends AppCompatActivity {
         protected Bitmap doInBackground(String... queryUrlStrings) {
             Bitmap bitmap = null;
             try {
-                // Fetch query URL
-                String queryUrlString = queryUrlStrings[0];
-                URL queryUrl = new URL(queryUrlString);
+                List<String> queryResults = null;
+                if (ImagesActivity.this.imageLinks == null) {
+                    // Fetch query URL
+                    String queryUrlString = queryUrlStrings[0];
+                    URL queryUrl = new URL(queryUrlString);
 
-                // Make a request to fet a stream of the results
-                HttpURLConnection conn = (HttpURLConnection) queryUrl.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept", "application/json");
-                BufferedReader br = new BufferedReader(new InputStreamReader(
-                        (conn.getInputStream())));
+                    // Make a request to fetch a stream of the results
+                    HttpURLConnection conn = (HttpURLConnection) queryUrl.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setRequestProperty("Accept", "application/json");
+                    BufferedReader br = new BufferedReader(new InputStreamReader(
+                            (conn.getInputStream())));
 
-                // Store the query result links
-                String output;
-                List<String> queryResults = new ArrayList<>();
-                while ((output = br.readLine()) != null) {
-                    if (output.contains("\"link\": \"")) {
-                        String link = output.substring(output.indexOf("\"link\": \"") +
-                                ("\"link\": \"").length(), output.indexOf("\","));
-                        queryResults.add(link);
+                    // Store the query result links
+                    String output;
+                    queryResults = new ArrayList<>();
+                    while ((output = br.readLine()) != null) {
+                        if (output.contains("\"link\": \"")) {
+                            String link = output.substring(output.indexOf("\"link\": \"") +
+                                    ("\"link\": \"").length(), output.indexOf("\","));
+                            queryResults.add(link);
+                        }
                     }
+
+                    // Disconnect after reading from the stream
+                    conn.disconnect();
+                } else {
+                    queryResults = imageLinks;
                 }
 
-                // Disconnect after reading from the stream
-                conn.disconnect();
+                if (queryResults.isEmpty()) {
+                    // There are no query results, just return
+                    return bitmap;
+                } else {
+                    // Get a random link
+                    int randInt = 0;
+                    do {
+                        Random rand = new Random();
+                        randInt = rand.nextInt(queryResults.size());
+                    } while (randInt == linkIndex && queryResults.size() != 1);
+                    String chosenResultUrl = queryResults.get(randInt);
 
-                // Get a random link
-                Random rand = new Random();
-                int randInt = rand.nextInt(queryResults.size());
-                String chosenResultUrl = queryResults.get(randInt);
+                    // Construct a bitmap from the URL
+                    InputStream in = new java.net.URL(chosenResultUrl).openStream();
+                    bitmap = BitmapFactory.decodeStream(in);
 
-                // Construct a bitmap from the URL
-                InputStream in = new java.net.URL(chosenResultUrl).openStream();
-                bitmap = BitmapFactory.decodeStream(in);
+                    return bitmap;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("Lel, some kind of error happened");
             }
-            return bitmap;
         }
 
         protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
+            if (result == null) {
+                // TODO(denisli): do this???
+            } else {
+                imageView.setImageBitmap(result);
+            }
         }
     }
 
