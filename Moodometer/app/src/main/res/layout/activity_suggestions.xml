@@ -10,9 +10,124 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="hackmit2016.moodometer.Suggestions">
 
+
     <TextView
+        android:id="@+id/goals_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is suggestions" />
+        android:text="placeholder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"/>
+    <Button
+        android:id="@+id/goal_return_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/done"
+        android:onClick="returnToMainLoop"
+        android:layout_above="@+id/new_goal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/new_goal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_goal_hint"
+        android:inputType="text"
+        android:layout_above="@+id/start_time_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:id="@+id/start_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter a start time"
+        android:layout_above="@+id/new_goal_startTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <!-- ssdfsd
+    <TimePicker
+        android:id="@+id/new_goal_startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/new_goal_endTime"
+        android:layout_alignBottom="@+id/new_goal_endTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp" />
+        -->
+
+    <Button
+        android:id="@+id/new_goal_startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_goal_startTime"
+        android:onClick="showTimePickerDialog"
+        android:layout_alignBottom="@+id/end_time_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <EditText
+        android:id="@+id/end_time_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/end_time_text"
+        android:inputType="number"
+        android:layout_above="@+id/start_date_text"
+        android:layout_alignLeft="@+id/new_goal_endDate"
+        android:layout_alignStart="@+id/new_goal_endDate" />
+
+    <TextView
+        android:id="@+id/start_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter a start date"
+        android:layout_above="@+id/new_goal_startDate"
+        android:layout_alignRight="@+id/start_time_text"
+        android:layout_alignEnd="@+id/start_time_text" />
+    <Button
+        android:id="@+id/new_goal_startDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_goal_startDate"
+        android:onClick="setDate"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="117dp" />
+
+    <TextView
+        android:id="@+id/end_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter an end date"
+        android:layout_above="@+id/new_goal_startDate"
+        android:layout_alignLeft="@+id/new_goal_endDate"
+        android:layout_alignStart="@+id/new_goal_endDate" />
+    <Button
+        android:id="@+id/new_goal_endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_goal_endDate"
+        android:onClick="setDate"
+        android:layout_below="@+id/end_date_text"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="96dp"
+        android:layout_height="50dp"
+        android:text="Send"
+        android:onClick="createGoal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

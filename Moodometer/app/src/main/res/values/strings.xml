@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Moodometer</string>
+    <string name="done">Done</string>
+    <string name="new_goal_hint">Enter a new goal</string>
+    <string name="new_goal_startTime">Enter a start time</string>
+    <string name="new_goal_endTime">Enter an end time</string>
+    <string name="new_goal_startDate">Enter a start date</string>
+    <string name="new_goal_endDate">Enter an end date</string>
+    <string name="end_time_text">How many hours</string>
 </resources>
