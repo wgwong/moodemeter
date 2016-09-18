@@ -136,7 +136,7 @@ public class ImagesActivity extends AppCompatActivity {
                     // Construct a bitmap from the URL
                     InputStream in = new java.net.URL(chosenResultUrl).openStream();
                     bitmap = BitmapFactory.decodeStream(in);
-
+                    in.close();
                     return bitmap;
                 }
             } catch (Exception e) {
