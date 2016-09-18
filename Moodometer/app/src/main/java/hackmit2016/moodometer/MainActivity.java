@@ -17,10 +17,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button imagesButton = (Button) findViewById(R.id.imagesButton);
+        Button musicButton = (Button) findViewById(R.id.musicButton);
         imagesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ImagesActivity.class);
+                startActivity(intent);
+            }
+        });
+        musicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MusicActivity.class);
                 startActivity(intent);
             }
         });

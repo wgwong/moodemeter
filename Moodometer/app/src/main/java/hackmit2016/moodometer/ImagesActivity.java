@@ -76,7 +76,7 @@ public class ImagesActivity extends AppCompatActivity {
             public void onClick(View v) {
 
             }
-         });
+        });
     }
 
     private static class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
