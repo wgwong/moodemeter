@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.api.client.util.DateTime;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -28,17 +29,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
-        Date today = new Date();
-        Gson gson = new Gson();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(today);
-        Date[] dates = new Date[NUM_DAYS];
+        int today = Calendar.getInstance().get(Calendar.DATE);
         int[] moods = { 4, 5, 5, 4, 2, 3, 4};
         for (int i = 0; i < NUM_DAYS; i++) {
-            cal.add(Calendar.DATE, -1);
-            Date date = cal.getTime();
-            dates[i] = date;
-            editor.putInt(gson.toJson(date), moods[i]);
+            editor.putInt(Integer.toString(today - 1 - i), moods[i]);
+            System.out.println("Dates: " + (today - 1 - i));
+            editor.apply();
         }
     }
 
@@ -57,25 +53,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default: userResponse = 5;
         }
-        Date today = new Date();
-        Gson gson = new Gson();
-        String todayDate = gson.toJson(today);
+        int today = Calendar.getInstance().get(Calendar.DATE);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(todayDate, userResponse);
+        editor.putInt(Integer.toString(today), userResponse);
         editor.apply();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(today);
-        Date[] dates = new Date[NUM_DAYS];
         List<Integer> moods = new ArrayList<>();
         for (int i = 0; i < NUM_DAYS; i++) {
-            cal.add(Calendar.DATE, -1);
-            Date date = cal.getTime();
-            dates[i] = date;
-            int mood = sharedPref.getInt(gson.toJson(date), 0);
+            int mood = sharedPref.getInt(Integer.toString(today - 1 - i), 0);
             moods.add(mood);
         }
         moods.add(userResponse);
+        for (int mood : moods) {
+            System.out.println("Moods in : " + mood);
+        }
         //intent logic board
         Class<? extends AppCompatActivity> activityClass = null;
         DangerLevelDeterminer determiner = new DangerLevelDeterminer();
