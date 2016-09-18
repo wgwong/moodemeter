@@ -29,6 +29,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/openAndroidMediaPlayerButton"
+        android:layout_alignRight="@+id/selectRandomMusicButton"
+        android:layout_alignEnd="@+id/selectRandomMusicButton"
+        android:text="Other Stuff" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

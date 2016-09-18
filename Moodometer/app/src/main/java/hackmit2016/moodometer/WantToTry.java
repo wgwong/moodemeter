@@ -1,6 +1,7 @@
 package hackmit2016.moodometer;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,11 @@ public class WantToTry extends AppCompatActivity {
         //currently hardcoded to go to suggestions
         Intent intent = new Intent(this, Suggestions.class);
         startActivity(intent);
+    }
+
+    public void openContactsActivity(View v) {
+        Intent goToContacts = new Intent(WantToTry.this, ContactsActivity.class);
+        WantToTry.this.startActivity(goToContacts);
     }
 
 }

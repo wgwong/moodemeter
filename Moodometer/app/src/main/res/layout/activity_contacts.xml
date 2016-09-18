@@ -27,6 +27,7 @@
         android:id="@+id/pictures"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="listenToMusic" />
 
 </RelativeLayout>

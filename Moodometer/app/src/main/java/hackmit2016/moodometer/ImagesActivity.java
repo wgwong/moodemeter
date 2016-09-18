@@ -1,9 +1,11 @@
 package hackmit2016.moodometer;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -158,6 +160,11 @@ public class ImagesActivity extends AppCompatActivity {
             isSearchingImage = false;
             cuteAnimalsButton.setText("Cute animals");
         }
+    }
+
+    public void openSuggestionsActivity(View v) {
+        Intent goToSuggestions = new Intent(ImagesActivity.this, Suggestions.class);
+        ImagesActivity.this.startActivity(goToSuggestions);
     }
 
 }
