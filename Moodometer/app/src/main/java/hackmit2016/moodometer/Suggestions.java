@@ -129,8 +129,12 @@ public class Suggestions extends Activity
                 .setBackOff(new ExponentialBackOff());
     }
 
-    //time stuff
+    public void returnToMainLoop(View view) {
+        Intent intent = new Intent(Suggestions.this, ContactsActivity.class);
+        startActivity(intent);
+    }
 
+    //time stuff
     public void showTimePickerDialog(View view) {
         int hour_of_day = startTimeCalendar.get(java.util.Calendar.HOUR_OF_DAY);
         int minute = startTimeCalendar.get(java.util.Calendar.MINUTE);
@@ -271,6 +275,18 @@ public class Suggestions extends Activity
         } else {
             Log.d("debug","addinggg");
             new MakeRequestTask(mCredential, "add", this).execute();
+
+            TextView msgTextView = ((TextView) findViewById(R.id.goals_message));
+
+            System.out.println("where");
+            msgTextView.setVisibility(View.VISIBLE);
+            Log.d("debug", "did");
+            msgTextView.setText("Goal created! Check your calendar!");
+            //System.out.println("did");
+
+            System.out.println("this");
+            ((Button) findViewById(R.id.goal_return_button)).setVisibility(View.VISIBLE);
+            System.out.println("fail");
         }
     }
 
@@ -535,23 +551,9 @@ public class Suggestions extends Activity
             Log.i("androidapp", "I am herere");
 
 
-            mService.events().insert(calendarId, suggestion).execute();
+            //mService.events().insert(calendarId, suggestion).execute();
 
             System.out.println("Event created");
-
-            TextView msgTextView = ((TextView) findViewById(R.id.goals_message));
-            System.out.println("where");
-            msgTextView.setText(new StringBuilder().append("Goal created! Check your calendar!"));
-            System.out.println("did");
-            msgTextView.setVisibility(View.VISIBLE);
-            System.out.println("this");
-            ((Button) findViewById(R.id.goal_return_button)).setVisibility(View.VISIBLE);
-            System.out.println("fail");
-        }
-
-        public void returnToMainLoop(View view) {
-            Intent intent = new Intent(ctx, ContactsActivity.class);
-            startActivity(intent);
         }
 
         /**
@@ -584,7 +586,6 @@ public class Suggestions extends Activity
 
             return eventStrings;
         }
-
 
         @Override
         protected void onPreExecute() {
