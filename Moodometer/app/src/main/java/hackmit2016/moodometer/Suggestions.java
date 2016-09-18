@@ -146,10 +146,6 @@ public class Suggestions extends Activity
         c.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay);
         c.set(java.util.Calendar.MINUTE, minute);
 
-        Log.d("debug", "yo we did it fam");
-        Log.d("debug", "id is " + view.getId());
-        Log.d("debug", "id is " + view.getId());
-
         timeViewStart = (TextView) findViewById(R.id.start_time_text);
 
         StringBuilder timeString = new StringBuilder();
@@ -545,15 +541,7 @@ public class Suggestions extends Activity
 
             String calendarId = mService.calendars().get("primary").getCalendarId();
 
-
-            Log.d("androidapp","I am here");
-
-            Log.i("androidapp", "I am herere");
-
-
-            //mService.events().insert(calendarId, suggestion).execute();
-
-            System.out.println("Event created");
+            mService.events().insert(calendarId, suggestion).execute();
         }
 
         /**
