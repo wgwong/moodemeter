@@ -27,6 +27,7 @@ public class ImagesActivity extends AppCompatActivity {
     private List<String> imageLinks;
     private int linkIndex = -1;
     boolean isSearchingImage = false;
+    boolean wasImageSet = false;
 
     Button cuteAnimalsButton;
 
@@ -70,8 +71,9 @@ public class ImagesActivity extends AppCompatActivity {
                                     urlSearchTypeComponent + urlComponentLinker +
                                     urlEnd;
                             isSearchingImage = true;
+                            wasImageSet = false;
                             cuteAnimalsButton.setText("Searching for cute animal image...");
-                            new LoadImageTask(imageView).execute(urlString);
+                            new LoadImageTask(imageView, urlString).execute(urlString);
                         } catch (Exception e) {
                             e.printStackTrace();
                             throw new RuntimeException("Hacking... just throw exception whenever");
@@ -90,9 +92,11 @@ public class ImagesActivity extends AppCompatActivity {
 
     private class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
         private ImageView imageView;
+        private String queryUrl;
 
-        public LoadImageTask(ImageView imageView) {
+        public LoadImageTask(ImageView imageView, String queryUrl) {
             this.imageView = imageView;
+            this.queryUrl = queryUrl;
         }
 
         protected Bitmap doInBackground(String... queryUrlStrings) {
@@ -144,17 +148,17 @@ public class ImagesActivity extends AppCompatActivity {
                     return bitmap;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                throw new RuntimeException("Lel, some kind of error happened");
+                return bitmap;
             }
         }
 
         protected void onPostExecute(Bitmap result) {
             if (result == null) {
-                // TODO(denisli): do this???
-            } else {
-                imageView.setImageBitmap(result);
+                new LoadImageTask(imageView, queryUrl).execute(queryUrl);
+                return;
             }
+            imageView.setImageBitmap(result);
+            wasImageSet = true;
             isSearchingImage = false;
             cuteAnimalsButton.setText("Cute animals");
         }
