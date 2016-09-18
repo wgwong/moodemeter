@@ -20,7 +20,11 @@
         <activity android:name=".Suggestions" />
         <activity android:name=".ImagesActivity" />
         <activity android:name=".ContactsActivity" />
+<<<<<<< HEAD
         <activity android:name=".LaunchActivity"></activity>
+=======
+        <activity android:name=".MusicActivity" />
+>>>>>>> 92c00e4afc7a8e7b783077cfd2da292e885b02f2
     </application>
 
 </manifest>

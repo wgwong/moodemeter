@@ -38,14 +38,11 @@
         android:layout_alignTop="@+id/cuteAnimalsButton"
         android:layout_centerHorizontal="true" />
 
-    <EditText
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="This is my text box..."
-        android:id="@+id/textBox"
-        android:layout_below="@+id/cuteAnimalsButton"
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="34dp" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
