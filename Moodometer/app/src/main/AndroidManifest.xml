@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".Suggestions" />
         <activity android:name=".ImagesActivity" />
-        <activity android:name=".ContactsActivity"></activity>
+        <activity android:name=".ContactsActivity" />
+        <activity android:name=".LaunchActivity"></activity>
     </application>
 
 </manifest>
