@@ -3,22 +3,19 @@ package hackmit2016.moodometer;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,22 +23,40 @@ import java.util.Random;
 
 public class ImagesActivity extends AppCompatActivity {
 
+    private static final String[] youtubeLinks = {
+            "https://www.youtube.com/watch?v=LBRTtVQAOIc",
+            "https://www.youtube.com/watch?v=g4xLVP_eFec",
+            "https://www.youtube.com/watch?v=RN36RzSjWNw",
+            "https://www.youtube.com/watch?v=T2wJAihGpfI"
+    };
+
     private List<String> imageLinks;
     private int linkIndex = -1;
     boolean isSearchingImage = false;
     boolean wasImageSet = false;
 
     Button cuteAnimalsButton;
+    Button videosButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images);
 
-        cuteAnimalsButton = (Button) findViewById(R.id.cuteAnimalsButton);
-        final Button otherStuffButton = (Button) findViewById(R.id.otherStuffButton);
+        cuteAnimalsButton = (Button) findViewById(R.id.cuteAnimalsImagesButton);
+        videosButton = (Button) findViewById(R.id.cuteAnimalsVideosButton);
+        videosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Random rand = new Random();
+                int randomNum = rand.nextInt(youtubeLinks.length);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLinks[randomNum])));
+            }
+        });
+
         final ImageView imageView = (ImageView) findViewById(R.id.imageView);
         cuteAnimalsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 if (!isSearchingImage) {
                     int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -82,12 +97,6 @@ public class ImagesActivity extends AppCompatActivity {
                         }
                     }
                 }
-            }
-        });
-
-        otherStuffButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
             }
         });
     }
