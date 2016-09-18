@@ -12,6 +12,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/background"
         android:text="Random music select (not implemented)"
         android:id="@+id/selectRandomMusicButton"
         android:layout_alignParentTop="true"
