@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         Class<? extends AppCompatActivity> activityClass = null;
         DangerLevelDeterminer determiner = new DangerLevelDeterminer();
         DangerLevelDeterminer.Danger danger = determiner.getDangerLevel(moods);
+
         if (danger == DangerLevelDeterminer.Danger.HIGH) {
             activityClass = MusicActivity.class;
         } else if (danger == DangerLevelDeterminer.Danger.MEDIUM) {
@@ -79,5 +80,6 @@ public class MainActivity extends AppCompatActivity {
             activityClass = WantToTry.class;
         }
         Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
     }
 }
