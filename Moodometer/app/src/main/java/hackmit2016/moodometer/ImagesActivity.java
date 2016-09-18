@@ -2,6 +2,7 @@ package hackmit2016.moodometer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +12,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class ImagesActivity extends AppCompatActivity {
 
@@ -57,30 +63,7 @@ public class ImagesActivity extends AppCompatActivity {
                                 urlFileTypeComponent + urlComponentLinker +
                                 urlSearchTypeComponent + urlComponentLinker +
                                 urlEnd;
-                        URL url = new URL(urlString);
-                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                        conn.setRequestMethod("GET");
-                        conn.setRequestProperty("Accept", "application/json");
-                        BufferedReader br = new BufferedReader(new InputStreamReader(
-                                (conn.getInputStream())));
-
-                        String output;
-                        String text = "";
-                        while ((output = br.readLine()) != null) {
-
-                            if (output.contains("\"link\": \"")) {
-                                String link = output.substring(output.indexOf("\"link\": \"") +
-                                        ("\"link\": \"").length(), output.indexOf("\","));
-                                text += link + "\n";
-                                editText.setText(text);
-                                InputStream in = new java.net.URL(link).openStream();
-                                Bitmap bitmap = BitmapFactory.decodeStream(in);
-                                imageView.setImageBitmap(bitmap);
-                                break;
-                            }
-                        }
-
-                        conn.disconnect();
+                        new LoadImageTask(imageView).execute(urlString);
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new RuntimeException("Hacking... just throw exception whenever");
@@ -94,7 +77,61 @@ public class ImagesActivity extends AppCompatActivity {
 
             }
          });
+    }
 
+    private static class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+        private ImageView imageView;
+
+        public LoadImageTask(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... queryUrlStrings) {
+            Bitmap bitmap = null;
+            try {
+                // Fetch query URL
+                String queryUrlString = queryUrlStrings[0];
+                URL queryUrl = new URL(queryUrlString);
+
+                // Make a request to fet a stream of the results
+                HttpURLConnection conn = (HttpURLConnection) queryUrl.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+
+                // Store the query result links
+                String output;
+                List<String> queryResults = new ArrayList<>();
+                while ((output = br.readLine()) != null) {
+                    if (output.contains("\"link\": \"")) {
+                        String link = output.substring(output.indexOf("\"link\": \"") +
+                                ("\"link\": \"").length(), output.indexOf("\","));
+                        queryResults.add(link);
+                    }
+                }
+
+                // Disconnect after reading from the stream
+                conn.disconnect();
+
+                // Get a random link
+                Random rand = new Random();
+                int randInt = rand.nextInt(queryResults.size());
+                String chosenResultUrl = queryResults.get(randInt);
+
+                // Construct a bitmap from the URL
+                InputStream in = new java.net.URL(chosenResultUrl).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Lel, some kind of error happened");
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 
 }
