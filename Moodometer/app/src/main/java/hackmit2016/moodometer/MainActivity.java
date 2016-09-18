@@ -18,45 +18,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button imagesButton = (Button) findViewById(R.id.imagesButton);
-        Button musicButton = (Button) findViewById(R.id.musicButton);
-        imagesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ImagesActivity.class);
-                startActivity(intent);
-            }
-        });
-        musicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MusicActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
-    /** Called when the user clicks the Send button */
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, LaunchActivity.class);
-        startActivity(intent);
-    }
-
-    // Checks if user has input a mood rating for today. If not, launches mood picking
-    // activity. Otherwise chooses a a therapy to launch.
-    public void launchInitialActivity() {
-        Date date = new Date();
-        Gson todayGson = new Gson();
-        String todayString = todayGson.toJson(date);
+    // Records user's mood rating on a scale of 1 to 5 for the day.
+    public void recordResponse(View v) {
+        String userResponseID = getResources().getResourceEntryName(v.getId());
+        int userResponse;
+        switch (userResponseID) {
+            case "mood1": userResponse = 1;
+                break;
+            case "mood2": userResponse = 2;
+                break;
+            case "mood3": userResponse = 3;
+                break;
+            case "mood4": userResponse = 4;
+                break;
+            default: userResponse = 5;
+        }
+        Date today = new Date();
+        Gson gson = new Gson();
+        String date = gson.toJson(today);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        if (!sharedPref.contains(todayString)) {
-            Intent intent = new Intent(MainActivity.this, LaunchActivity.class);
-            startActivity(intent);
+        editor.putInt(date, userResponse);
+        editor.commit();
+        //intent logic board
+        Class<? extends AppCompatActivity> activityClass = null;
+        if (userResponse == 1 || userResponse == 2) {
+            activityClass = Suggestions.class;
+        } else if (userResponse == 3 || userResponse == 4) {
+            activityClass = ImagesActivity.class;
         } else {
-            // intent logic board activity
+            activityClass = MusicActivity.class;
         }
-
+        Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
     }
 }

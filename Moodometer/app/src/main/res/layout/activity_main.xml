@@ -12,29 +12,56 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start suggestions"
-        android:onClick="sendMessage"
-        android:id="@+id/button2" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="How are you feeling today?"
+        android:id="@+id/launchQuestion"
+        android:layout_marginBottom="52dp"
+        android:layout_above="@+id/mood5"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Images"
-        android:id="@+id/imagesButton"
-        android:layout_below="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="5 - Perfect"
+        android:id="@+id/mood5"
+        android:layout_above="@+id/mood4"
+        android:layout_centerHorizontal="true"
+        android:onClick="recordResponse"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Music"
-        android:id="@+id/musicButton"
-        android:layout_below="@+id/imagesButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="1 - Depressed"
+        android:id="@+id/mood1"
+        android:layout_below="@+id/mood2"
+        android:layout_centerHorizontal="true"
+        android:onClick="recordResponse" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2 - Down"
+        android:id="@+id/mood2"
+        android:layout_below="@+id/mood3"
+        android:layout_centerHorizontal="true"
+        android:onClick="recordResponse"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3 - Fine "
+        android:id="@+id/mood3"
+        android:layout_below="@+id/mood4"
+        android:layout_centerHorizontal="true"
+        android:onClick="recordResponse"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4 - Pretty Good"
+        android:id="@+id/mood4"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="recordResponse"/>
+
 </RelativeLayout>
