@@ -30,4 +30,14 @@
         android:layout_alignParentEnd="true"
         android:onClick="listenToMusic" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Would you like to call or message a friend?"
+        android:id="@+id/textView2"
+        android:layout_marginBottom="54dp"
+        android:layout_above="@+id/test"
+        android:gravity="center"/>
+
 </RelativeLayout>
